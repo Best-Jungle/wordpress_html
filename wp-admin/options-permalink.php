@@ -76,10 +76,8 @@ if ( $iis7_permalinks ) {
 	else
 		$writable = false;
 } elseif ( $is_nginx ) {
-	// var_dump(123);die();
 	$writable = false;
 } else {
-	
 	if ( ( ! file_exists( $home_path . '.htaccess' ) && is_writable( $home_path ) ) || is_writable( $home_path . '.htaccess' ) ) {
 		$writable = true;
 	} else {

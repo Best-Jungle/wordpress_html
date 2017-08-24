@@ -1610,7 +1610,7 @@ Blog Section
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
 }
 .blog-wrap .blog-item-title a {
-  color: inherit;
+  color: #7ee080;
 }
 /*
 Animation Overflow

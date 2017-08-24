@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="http://www.wangyuehan.cn/xmlrpc.php">
+
+<!-- WP_Head -->
+<title>Github  进阶操作（回滚、推送远程） &#8211; 长颈鹿先森</title>
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="长颈鹿先森 &raquo; Feed" href="http://www.wangyuehan.cn/feed" />
+<link rel="alternate" type="application/rss+xml" title="长颈鹿先森 &raquo; 评论Feed" href="http://www.wangyuehan.cn/comments/feed" />
+<link rel="alternate" type="application/rss+xml" title="长颈鹿先森 &raquo; Github  进阶操作（回滚、推送远程）评论Feed" href="http://www.wangyuehan.cn/612.html/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.2.1\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/www.wangyuehan.cn\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.7.3"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),!(j.toDataURL().length<3e3)&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,65039,8205,55356,57096),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57331,55356,57096),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55357,56425,55356,57341,8205,55357,56507),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55357,56425,55356,57341,55357,56507),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crafter_bootstrap-css'  href='http://www.wangyuehan.cn/wp-content/themes/crafter/css/bootstrap.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crafter_flickity-css'  href='http://www.wangyuehan.cn/wp-content/themes/crafter/css/flickity.css?ver=1.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crafter_photo_swipe-css'  href='http://www.wangyuehan.cn/wp-content/themes/crafter/css/photoswipe.css?ver=4.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crafter_photo_swipe_default-css'  href='http://www.wangyuehan.cn/wp-content/themes/crafter/css/default-skin/default-skin.css?ver=4.1.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crafter_google-font-css'  href='//fonts.googleapis.com/css?family=Ubuntu%3A300%2C400%2C700&#038;ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='crafter_style-css'  href='http://www.wangyuehan.cn/wp-content/themes/crafter/style.css?ver=4.7.3' type='text/css' media='all' />
+<style id='crafter_style-inline-css' type='text/css'>
+
+	/* Text Color */
+	body{
+		color: #999999;
+	}
+	/* Link Color */
+	a{
+		color: #00b09a;
+	}
+
+	/* Copy background color */
+	.section-title::before,
+	.video-text-wrap .video-text-title::before{
+		border-color: #ffffff;
+	}
+
+
+</style>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/modernizr.custom.67069.js?ver=1'></script>
+<link rel='https://api.w.org/' href='http://www.wangyuehan.cn/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.wangyuehan.cn/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.wangyuehan.cn/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Microsoft Malware Classification Challenge (BIG 2015)' href='http://www.wangyuehan.cn/605.html' />
+<link rel='next' title='基于纹理指纹的恶意代码变种检测方法' href='http://www.wangyuehan.cn/622.html' />
+<meta name="generator" content="WordPress 4.7.3" />
+<link rel="canonical" href="http://www.wangyuehan.cn/612.html" />
+<link rel='shortlink' href='http://www.wangyuehan.cn/?p=612' />
+<link rel="alternate" type="application/json+oembed" href="http://www.wangyuehan.cn/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.wangyuehan.cn%2F612.html" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.wangyuehan.cn/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.wangyuehan.cn%2F612.html&#038;format=xml" />
+<!-- End WP_Head -->
+
+</head>
+
+<body class="post-template-default single single-post postid-612 single-format-standard crafter v1.0.10">
+    	<header id="header" class="site-header" role="banner" >
+		<div class="container">
+        	<div class="row">
+
+        		<div class="logo_container col-md-5">
+                                        						<p class="site-title"><a href="http://www.wangyuehan.cn/" rel="home" class="ql_logo">长颈鹿先森</a></p>
+					                </div><!-- /logo_container -->
+
+                <button id="ql_nav_btn" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ql_nav_collapse" aria-expanded="false">
+                    <i class="fa fa-navicon"></i>
+                </button>
+
+
+                <div class="col-md-7">
+                	<div class="collapse navbar-collapse" id="ql_nav_collapse">
+                        <nav id="jqueryslidemenu" class="jqueryslidemenu navbar " role="navigation">
+                            <div class="menu-menu-1-container"><ul id="primary-menu" class="nav"><li id="menu-item-193" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-193"><a title="首页" href="http://www.wangyuehan.cn">首页</a></li>
+<li id="menu-item-404" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-404 dropdown"><a title="服务器笔记" href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">服务器笔记 <i class="fa fa-angle-down"></i></a>
+<ul role="menu" class=" dropdown-menu">
+	<li id="menu-item-597" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-597"><a title="Linux 学习笔记" href="http://www.wangyuehan.cn/category/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ac%94%e8%ae%b0/linux-%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux 学习笔记</a></li>
+	<li id="menu-item-598" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-598"><a title="建站初始化" href="http://www.wangyuehan.cn/category/%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ac%94%e8%ae%b0/%e5%bb%ba%e7%ab%99%e5%88%9d%e5%a7%8b%e5%8c%96">建站初始化</a></li>
+</ul>
+</li>
+<li id="menu-item-437" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-has-children menu-item-437 dropdown"><a title="博客搭建" href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">博客搭建 <i class="fa fa-angle-down"></i></a>
+<ul role="menu" class=" dropdown-menu">
+	<li id="menu-item-439" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-439"><a title="WordPress note" href="http://www.wangyuehan.cn/category/%e5%8d%9a%e5%ae%a2%e6%90%ad%e5%bb%ba%e4%bd%bf%e7%94%a8/wordpress-note">WordPress note</a></li>
+	<li id="menu-item-438" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-438"><a title="Jekyll&amp;Github" href="http://www.wangyuehan.cn/category/%e5%8d%9a%e5%ae%a2%e6%90%ad%e5%bb%ba%e4%bd%bf%e7%94%a8/jekyllgithub">Jekyll&#038;Github</a></li>
+</ul>
+</li>
+<li id="menu-item-405" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-405 dropdown"><a title="机器学习大数据" href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">机器学习大数据 <i class="fa fa-angle-down"></i></a>
+<ul role="menu" class=" dropdown-menu">
+	<li id="menu-item-606" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-606"><a title="Kaggle 大赛" href="http://www.wangyuehan.cn/category/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%a4%a7%e6%95%b0%e6%8d%ae/kaggle-%e5%a4%a7%e8%b5%9b">Kaggle 大赛</a></li>
+	<li id="menu-item-693" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-693"><a title="Python &amp; Anaconda" href="http://www.wangyuehan.cn/category/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%a4%a7%e6%95%b0%e6%8d%ae/python-anaconda">Python &#038; Anaconda</a></li>
+	<li id="menu-item-582" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-582"><a title="论文学习-恶意代码检测" href="http://www.wangyuehan.cn/category/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%a4%a7%e6%95%b0%e6%8d%ae/%e8%ae%ba%e6%96%87%e5%ad%a6%e4%b9%a0-%e6%81%b6%e6%84%8f%e4%bb%a3%e7%a0%81%e6%a3%80%e6%b5%8b">论文学习-恶意代码检测</a></li>
+	<li id="menu-item-407" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-407"><a title="自动化处理恶意代码" href="http://www.wangyuehan.cn/category/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%a4%a7%e6%95%b0%e6%8d%ae/%e8%87%aa%e5%8a%a8%e5%8c%96%e5%a4%84%e7%90%86%e6%81%b6%e6%84%8f%e4%bb%a3%e7%a0%81">自动化处理恶意代码</a></li>
+	<li id="menu-item-569" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-569"><a title="机器学习算法" href="http://www.wangyuehan.cn/category/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%a4%a7%e6%95%b0%e6%8d%ae/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e7%ae%97%e6%b3%95">机器学习算法</a></li>
+	<li id="menu-item-406" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-406"><a title="Spark 平台" href="http://www.wangyuehan.cn/category/%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e5%a4%a7%e6%95%b0%e6%8d%ae/spark">Spark 平台</a></li>
+</ul>
+</li>
+<li id="menu-item-409" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-409 dropdown"><a title="计算机语言" href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">计算机语言 <i class="fa fa-angle-down"></i></a>
+<ul role="menu" class=" dropdown-menu">
+	<li id="menu-item-410" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-410"><a title="java" href="http://www.wangyuehan.cn/category/%e8%ae%a1%e7%ae%97%e6%9c%ba%e8%af%ad%e8%a8%80/java">java</a></li>
+	<li id="menu-item-411" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-411"><a title="php" href="http://www.wangyuehan.cn/category/%e8%ae%a1%e7%ae%97%e6%9c%ba%e8%af%ad%e8%a8%80/php">php</a></li>
+	<li id="menu-item-412" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-412"><a title="Scala" href="http://www.wangyuehan.cn/category/%e8%ae%a1%e7%ae%97%e6%9c%ba%e8%af%ad%e8%a8%80/scala">Scala</a></li>
+	<li id="menu-item-542" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-542"><a title="C语言" href="http://www.wangyuehan.cn/category/%e8%ae%a1%e7%ae%97%e6%9c%ba%e8%af%ad%e8%a8%80/c%e8%af%ad%e8%a8%80">C语言</a></li>
+</ul>
+</li>
+<li id="menu-item-594" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-594 dropdown"><a title="关于我" href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">关于我 <i class="fa fa-angle-down"></i></a>
+<ul role="menu" class=" dropdown-menu">
+	<li id="menu-item-663" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-663"><a title="算法总结" href="http://www.wangyuehan.cn/category/%e5%85%b3%e4%ba%8e%e6%88%91/%e7%ae%97%e6%b3%95">算法总结</a></li>
+	<li id="menu-item-194" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-194"><a title="个人简介" href="http://www.wangyuehan.cn/%e5%85%b3%e4%ba%8e">个人简介</a></li>
+	<li id="menu-item-596" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-596"><a title="个人感悟" href="http://www.wangyuehan.cn/category/%e5%85%b3%e4%ba%8e%e6%88%91/%e4%b8%aa%e4%ba%ba%e6%84%9f%e6%82%9f">个人感悟</a></li>
+	<li id="menu-item-737" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-737"><a title="面经" href="http://www.wangyuehan.cn/category/%e5%85%b3%e4%ba%8e%e6%88%91/%e9%9d%a2%e7%bb%8f">面经</a></li>
+</ul>
+</li>
+</ul></div>                        </nav>
+                    </div><!-- /ql_nav_collapse -->
+                </div><!-- /col-md-7 -->
+
+                <div class="clearfix"></div>
+
+        	</div><!-- row-->
+        </div><!-- /container -->
+	</header>
+	<div class="clearfix"></div>
+    
+        <div id="container" class="container">
+        <div class="row">
+    
+	<main id="main" class="site-main col-md-8" role="main">
+
+		
+			
+<article id="post-612" class="post-612 post type-post status-publish format-standard hentry category-jekyllgithub">
+
+	<header class="entry-header">
+		<h1 class="post-title">Github  进阶操作（回滚、推送远程）</h1>	</header><!-- .entry-header -->
+
+	
+    <div class="post-content">
+
+    	<div class="entry-content">
+			<p>最近因为一些学业上的要求，对 git 又有了更深刻的认识。其实这些都是一些非常简单的原理，在这里记录下来的原因一是希望看到这篇文章的同学，能够更快更深入的理解 git。第二个也是对自己踩的坑的一个总结回顾。</p>
+<p>在初步的对 git 进行使用以后，慢慢会发现，很多操作我不会，以前没有碰到但是碰到的时候真的很烦。最开始我建立仓库什么的，都是直接从 git 上 clone 一份，甚至就是直接本地git init 创建仓库，推送到远端。很多功能和场景都没有碰见过和使用过。下面主要讲述的方法针对于维护一个项目中实际碰到的情况。</p>
+<p>对于 Github 来说，我最早一直以为是一个远程的服务器，这是我对 git 最大的误区！！！其实 git 来说应该是有两种，一种是本地版的，一种是远程服务器（可以理解网页版）。其实git 的作用有很多，例如在本地就可以创建一个 git 库（git init），git 的所有操作都可以达成。所有可以实现的功能都和远程服务器Github 上功能一样。我一直以为本地git是为远程服务器服务的，或者说是为了配合远程 git 服务器而配置使用的。其实这两个 git 都是一样的，只不过一个是本地的，一个是远程的。</p>
+<p>一般来说，我们正常在本地建立 git 库管理文件即可，但是有时候出于各种目的，我们会将本地的 git 库推送到服务器上，便于远程多数人一起管理。在本地git 工作的时候，主要依赖3种区域。分别为：工作区域、缓存区域、版本库区域。一般来说git 工作的主要流程主要按以下步骤来，在工作区域通常为空的，我们在修改文件内容修改的即为工作区域内容。工作区域里有了增加后，我们执行 git add + 文件，将工作区里修改的内容增加到了缓存区域。接着执行 git commit -m +“提交说明”，将缓存区域中的文件修改写到版本库中。</p>
+<hr />
+<p>版本回滚&#8211;利用命令 git log我们可以查看从最近到最远的提交日志，可以看到如下图所示，每一次提交都会分配一个提交的版本号（高亮部分），利用这个版本号的前几位我们用 git reset + 版本号就可以恢复版本。如果觉得回滚版本有问题想要回到之前最新的版本，可以通过 git reflog 来查看之前所有操作的命令，里面就有之前的版本号。</p>
+<p><img src="http://www.wangyuehan.cn/wp-content/uploads/2017/02/7349c77ea7573a94a81cfac697fdb10d.png" /></p>
+<hr />
+<p>好了接下来干货时间，讲下 git 分支，拉取，提交等的坑。</p>
+<p>首先说下我们很多时候都是从远程克隆一个版本库到本地的，当本地对文件有修改的时候，通过 git push 就能推送上去。但是当多人协作的时候，很可能远程服务器端已经发生变化，比如新建了一个分支等。因此建议在使用本地库之前，先用 git pull 拉取一下远程的版本，进行同步。之后在对本地库文件进行操作。</p>
+<p>通常我们会建立许多个分支，在本地建立分支时，可以直接用 git branch + 分支名字。但是这里注意，我们在本地建立分支时要考虑到和远程服务器端分支的同步，在建立分支的同时需要建立和远程分支的关联。 通常命令为 git branch + 分支名字   origin/分支名字。或者使用命令git branch &#8211;set-upstream ;实例如下，其中debug为创建的分支 git branch &#8211;set-upstream debug origin/debug。建立完分支后我们可以用 git branch -vv 来查看本地与远程的对应情况。切换分支则可以用 git checkout (-b 加这个参数选项是新建一个分支并切换到该分支) + 分支名。</p>
+<p>在建立本地分支的时候推送到远程服务器时，如果没有建立关联会出现问题。<span class="s1">如果想保证这种情况不出现就在建立新分支推送到远程分支上的时候加上-u参数即可</span></p>
+<p class="p2"><span class="s2"><pre class="hljs"><code >git push -u origin feature-v</code></pre></span></p>
+<div>Git鼓励大量使用分支：</div>
+<pre class="hljs"><code >
+<div>查看分支：git branch</div>
+<div>创建分支：git branch &lt;name&gt;</div>
+<div>切换分支：git checkout &lt;name&gt;</div>
+<div>创建+切换分支：git checkout -b &lt;name&gt;</div>
+<div>合并某分支到当前分支：git merge &lt;name&gt;</div>
+<div>删除分支：git branch -d &lt;name&gt;</code></pre></div>
+<p>&nbsp;</p>
+					</div><!-- .entry-content -->
+
+		<div class="clearfix"></div>
+
+				<footer class="entry-footer">
+			<div class="metadata">
+	            <ul><li class="meta_date"><time class="entry-date published" datetime="2017-02-23T21:49:05+08:00">2017年2月23日</time><time class="updated" datetime="2017-03-21T15:26:49+08:00">2017年3月21日</time></li><li class="meta_comments">by <span class="author vcard"><a class="url fn n" href="http://www.wangyuehan.cn/author/wangyh">Wangyh</a></span></li><li class="meta_categories"><span class="cat-links">Posted in <a href="http://www.wangyuehan.cn/category/%e5%8d%9a%e5%ae%a2%e6%90%ad%e5%bb%ba%e4%bd%bf%e7%94%a8/jekyllgithub" rel="category tag">Jekyll&amp;Github</a></span></li></ul>	            <div class="clearfix"></div>
+	        </div><!-- /metadata -->
+	    </footer><!-- .entry-footer -->
+	    	    
+	</div><!-- /post_content -->
+
+</article><!-- #post-## -->
+
+
+			
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">文章导航</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="http://www.wangyuehan.cn/605.html" rel="prev">Microsoft Malware Classification Challenge (BIG 2015)</a></div><div class="nav-next"><a href="http://www.wangyuehan.cn/622.html" rel="next">基于纹理指纹的恶意代码变种检测方法</a></div></div>
+	</nav>
+			
+<div id="comments" class="comments-area">
+
+	
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/612.html#respond" style="display:none;">取消回复</a></small></h3>			<form action="http://www.wangyuehan.cn/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span> 必填项已用<span class="required">*</span>标注</p><div class="clearfix"></div><div class="input-wrap textarea">
+							      <label class="control-label" for="comment">Comment</label>
+							      <div class="controls-wrap">
+									    <textarea class="input-xlarge" name="comment" id="comment" tabindex="4" rows="3"></textarea>
+							      </div>
+								</div><div class="input-wrap">
+								      <label class="control-label" for="author">Name (*)</label>
+								      <div class="controls-wrap">
+									      	<i class="fa fa-user"></i>
+										    <input class="input-xlarge" type="text" name="author" id="author" value="" size="22" tabindex="1"  aria-required='true' />
+											
+								      </div>
+								    </div>
+<div class="input-wrap">
+								      <label class="control-label" for="email">Email (*)</label>
+								      <div class="controls-wrap">
+									      	<i class="fa fa-envelope"></i>
+										    <input class="input-xlarge" type="text" name="email" id="email" value="" size="22" tabindex="2"  aria-required='true' />
+								      </div>
+								    </div>
+<div class="input-wrap">
+								      <label class="control-label" for="url">Website</label>
+								      <div class="controls-wrap">
+									      	<i class="fa fa-link"></i>
+										    <input class="input-xlarge" type="text" name="url" id="url" value="" size="22" tabindex="3" />
+								      </div>
+								    </div>
+<p class="form-submit"><input name="submit" type="submit" id="submit-respond" class="submit" value="发表评论" /> <input type='hidden' name='comment_post_ID' value='612' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p>			</form>
+			</div><!-- #respond -->
+	 
+
+</div><!-- #comments -->
+
+		
+	</main><!-- #main -->
+
+
+	<aside id="sidebar" class="col-md-4 widget-area" role="complementary">
+	<aside id="archives-4" class="widget widget_archive"><h4 class="widget-title">文章归档</h4>		<label class="screen-reader-text" for="archives-dropdown-4">文章归档</label>
+		<select id="archives-dropdown-4" name="archive-dropdown" onchange='document.location.href=this.options[this.selectedIndex].value;'>
+			
+			<option value="">选择月份</option>
+				<option value='http://www.wangyuehan.cn/date/2017/08'> 2017年八月 &nbsp;(10)</option>
+	<option value='http://www.wangyuehan.cn/date/2017/04'> 2017年四月 &nbsp;(3)</option>
+	<option value='http://www.wangyuehan.cn/date/2017/03'> 2017年三月 &nbsp;(2)</option>
+	<option value='http://www.wangyuehan.cn/date/2017/02'> 2017年二月 &nbsp;(19)</option>
+
+		</select>
+		</aside><aside id="text-2" class="widget widget_text"><h4 class="widget-title">初次见面，请多指教</h4>			<div class="textwidget"><p>北京市朝阳区平乐园100号</p>
+</div>
+		</aside><aside id="text-3" class="widget widget_text"><h4 class="widget-title">我的邮箱</h4>			<div class="textwidget">wangyuehan_1993@sina.com</div>
+		</aside></aside><!-- #sidebar -->
+
+
+        <div class="clearfix"></div>
+    </div><!-- /row -->
+            
+</div><!-- /#container -->
+
+    <div class="sub-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-5">
+                    <p>
+                    &copy; 2017 长颈鹿先森.
+                    Designed by <a href="https://www.quemalabs.com/" rel="designer">Quema Labs</a>.                    </p>
+                </div>
+                <div class="col-md-7">
+                                    </div>
+
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .sub-footer -->
+
+
+<link rel='stylesheet' id='hljstheme-css'  href='http://www.wangyuehan.cn/wp-content/plugins/wp-code-highlightjs/styles/agate.css?ver=0.5.18' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/html5shiv.js?ver=3.7.3'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-includes/js/hoverIntent.min.js?ver=1.8.1'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/flickity.pkgd.js?ver=1.1.1'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/wow.js?ver=1.1.2'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/pace.js?ver=0.2.0'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/photoswipe.js?ver=4.1.1'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/photoswipe-ui-default.js?ver=4.1.1'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/bootstrap.js?ver=3.3.5'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-includes/js/comment-reply.min.js?ver=4.7.3'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/themes/crafter/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-includes/js/wp-embed.min.js?ver=4.7.3'></script>
+<script type='text/javascript' src='http://www.wangyuehan.cn/wp-content/plugins/wp-code-highlightjs/highlight.all.pack.js?ver=0.5.18'></script>
+    <style>pre.hljs {padding: 5px;}
+pre.hljs code {}</style>
+    <script type="text/javascript">
+    (function($, window) {
+        var init_fn_flag = false;
+        var init_fn = (function() {
+            if (init_fn_flag)
+                return;
+            init_fn_flag = true;
+             hljs.configure({"tabReplace":"    ","useBR":true});
+            $('pre code').each(function(i, block) {
+                hljs.highlightBlock(block);
+            });
+            $('pre:not(:has(code))').each(function(i, block){
+                var class_desc = $(block).attr("class") || "";
+                var reg_mat = class_desc.match(/brush\s*:\s*([\w\d]+)/i);
+                if(!reg_mat || reg_mat.length < 2)
+                    return;
+                var code_content = $(block).removeClass("brush:").removeClass("ruler:").removeClass("first-line:").removeClass("highlight:")
+                    .removeClass("brush:" + reg_mat[1] + ";").removeClass(reg_mat[1] + ";").removeClass("true;").removeClass("false;").html();
+                $(block).empty().append($("<code class='hljs'></code>").html(code_content)).addClass(reg_mat[1]);
+                hljs.highlightBlock(block);
+            });
+        $('pre.prettyprint:not(.prettyprinted), code.prettyprint:not(.prettyprinted), xmp.prettyprint:not(.prettyprinted)').each(function(i, block){
+            var jblock = $(block).removeClass("prettyprint");
+            if (jblock.prop("tagName").toLowerCase() == "code" && jblock.parent().prop("tagName").toLowerCase() == "pre") {
+                hljs.highlightBlock(jblock.parent().get(0));
+                return;
+            }
+
+            var class_desc = $(block).attr("class") || "";
+            var reg_mat = class_desc.match(/lang[^-]*-([\w\d]+)/i);
+            var code_content = $("<code class='hljs'></code>");
+            if (reg_mat && reg_mat.length >= 2) {
+                code_content.addClass(reg_mat[1]);
+            }
+            if (jblock.prop("tagName") === "PRE") {
+              jblock.wrapInner(code_content);
+              hljs.highlightBlock(jblock.children().get(0));
+            } else {
+              var code_content = jblock.html();
+              jblock.replaceWith($("<pre></pre>").append(code_content.html(code_content)));
+              hljs.highlightBlock(jblock.get(0));
+            }
+        });
+        $('pre:not(:has(code))').each(function(i, block){
+            var class_desc = $(block).attr("class") || "";
+            var reg_mat = class_desc.match(/lang\s*:\s*([\w\d]+)/i);
+            var code_content = $("<code class='hljs'></code>").html($(block).removeAttr('class').html());
+            if (reg_mat && reg_mat.length >= 2) {
+                code_content.addClass(reg_mat[1]);
+            }
+            $(block).empty().append(code_content);
+            hljs.highlightBlock(block);
+        });
+        });
+        $(document).ready(init_fn);
+        $(window).on("load", init_fn);
+    })(jQuery, window);
+    </script>
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.699 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2017-08-24 15:40:26 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->

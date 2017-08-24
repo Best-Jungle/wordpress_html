@@ -144,7 +144,6 @@ function get_sidebar( $name = null ) {
  * @param string $name The name of the specialised template.
  */
 function get_template_part( $slug, $name = null ) {
-
 	/**
 	 * Fires before the specified template part file is loaded.
 	 *
@@ -156,7 +155,6 @@ function get_template_part( $slug, $name = null ) {
 	 * @param string      $slug The slug name for the generic template.
 	 * @param string|null $name The name of the specialized template.
 	 */
-
 	do_action( "get_template_part_{$slug}", $slug, $name );
 
 	$templates = array();
@@ -165,7 +163,6 @@ function get_template_part( $slug, $name = null ) {
 		$templates[] = "{$slug}-{$name}.php";
 
 	$templates[] = "{$slug}.php";
-	
 
 	locate_template($templates, true, false);
 }
@@ -1511,7 +1508,6 @@ function get_the_archive_title() {
 	} else {
 		$title = __( 'Archives' );
 	}
-
 
 	/**
 	 * Filters the archive title.

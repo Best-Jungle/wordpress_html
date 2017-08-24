@@ -238,7 +238,6 @@ function the_content( $more_link_text = null, $strip_teaser = false) {
 	 * @param string $content Content of the current post.
 	 */
 	$content = apply_filters( 'the_content', $content );
-       	
 	$content = str_replace( ']]>', ']]&gt;', $content );
 	echo $content;
 }
@@ -260,8 +259,8 @@ function the_content( $more_link_text = null, $strip_teaser = false) {
  */
 function get_the_content( $more_link_text = null, $strip_teaser = false ) {
 	global $page, $more, $preview, $pages, $multipage;
+
 	$post = get_post();
-	// var_dump($post);
 
 	if ( null === $more_link_text ) {
 		$more_link_text = sprintf(
@@ -274,7 +273,7 @@ function get_the_content( $more_link_text = null, $strip_teaser = false ) {
 			__( '(more&hellip;)' )
 		);
 	}
-	// var_dump($more_link_text);
+
 	$output = '';
 	$has_teaser = false;
 

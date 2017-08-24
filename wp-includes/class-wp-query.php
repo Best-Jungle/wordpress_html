@@ -3310,7 +3310,7 @@ class WP_Query {
 			$this->queried_object_id = (int) $this->get('author');
 			$this->queried_object = get_userdata( $this->queried_object_id );
 		}
-		// var_dump($this->queried_object);
+
 		return $this->queried_object;
 	}
 

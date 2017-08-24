@@ -174,11 +174,9 @@ function has_filter($tag, $function_to_check = false) {
  * @return mixed The filtered value after all hooked functions are applied to it.
  */
 function apply_filters( $tag, $value ) {
-
 	global $wp_filter, $wp_current_filter;
 
 	$args = array();
-
 
 	// Do 'all' actions first.
 	if ( isset($wp_filter['all']) ) {
@@ -201,10 +199,11 @@ function apply_filters( $tag, $value ) {
 
 	// don't pass the tag name to WP_Hook
 	array_shift( $args );
+
 	$filtered = $wp_filter[ $tag ]->apply_filters( $value, $args );
-	// var_dump($tag);
 
 	array_pop( $wp_current_filter );
+
 	return $filtered;
 }
 
